@@ -34,6 +34,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest request) {
+        // springdoc-openapi 내부 요청은 기본 처리로 넘김
+        if (request.getRequestURI().startsWith("/v3/api-docs")) {
+            return null; // Spring 기본 처리로 넘김 (Swagger 정상 동작)
+        }
         ErrorCode code = ErrorCode.INTERNAL_SERVER_ERROR;
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .errorCode(code.getCode())
