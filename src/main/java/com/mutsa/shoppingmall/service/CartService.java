@@ -2,6 +2,7 @@ package com.mutsa.shoppingmall.service;
 
 import com.mutsa.shoppingmall.domain.Cart;
 import com.mutsa.shoppingmall.dto.cart.CartResponse;
+import com.mutsa.shoppingmall.exception.CartNotFoundException;
 import com.mutsa.shoppingmall.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class CartService {
     @Transactional(readOnly = true)
     public CartResponse getMyCartByEmail(String email) {
         Cart cart = cartRepository.findByUserEmailFetchJoin(email)
-                .orElseThrow(() -> new IllegalArgumentException("장바구니가 존재하지 않습니다."));
+                .orElseThrow(CartNotFoundException::new);
         return cartMapper.toCartResponse(cart);
     }
 } 
