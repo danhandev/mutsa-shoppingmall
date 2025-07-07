@@ -42,8 +42,8 @@ public class User {
     private String password;
 
     /** 사용자 장바구니 (1:1 관계, 역방향) */
-    // @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    // private Cart cart;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Cart cart;
 
     /** 생성 일시 */
     @CreatedDate
@@ -60,9 +60,9 @@ public class User {
         this.password = encodedPassword;
     }
 
-    // /** 장바구니 할당 메서드 */
-    // public void assignCart(Cart cart) {
-    //     this.cart = cart;
-    //     cart.setUser(this);
-    // }
+    /** 장바구니 할당 메서드 */
+    public void assignCart(Cart cart) {
+        this.cart = cart;
+        cart.setUser(this);
+    }
 }
