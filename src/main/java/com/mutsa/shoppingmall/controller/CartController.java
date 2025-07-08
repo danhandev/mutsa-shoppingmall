@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 
 /**
  * 장바구니 관련 API 컨트롤러
@@ -62,7 +63,7 @@ public class CartController {
     public ResponseEntity<CommonResponse<CartItemAddResponse>> addCartItem(
             @Parameter(description = "로그인한 사용자 이메일", required = true, example = "user@example.com")
             @RequestParam String email,
-            @RequestBody CartItemAddRequest request) {
+            @Valid @RequestBody CartItemAddRequest request) {
         CartItemAddResponse response = cartService.addCartItem(email, request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.<CartItemAddResponse>builder()

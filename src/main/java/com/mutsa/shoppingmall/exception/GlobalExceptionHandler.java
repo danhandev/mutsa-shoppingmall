@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDateTime;
 
@@ -42,6 +43,23 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .errorCode(code.getCode())
                 .message(code.getMessage())
+                .status(code.getStatus())
+                .timestamp(LocalDateTime.now())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(code.getStatus()).body(errorResponse);
+    }
+
+    /**
+     * 요청값 유효성 검증 실패 처리
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        ErrorCode code = ErrorCode.MISSING_REQUIRED_FIELD;
+        String message = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode(code.getCode())
+                .message(message)
                 .status(code.getStatus())
                 .timestamp(LocalDateTime.now())
                 .path(request.getRequestURI())
