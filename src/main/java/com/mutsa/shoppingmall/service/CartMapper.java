@@ -4,6 +4,7 @@ import com.mutsa.shoppingmall.domain.Cart;
 import com.mutsa.shoppingmall.domain.CartItem;
 import com.mutsa.shoppingmall.dto.cart.CartItemResponse;
 import com.mutsa.shoppingmall.dto.cart.CartResponse;
+import com.mutsa.shoppingmall.dto.cart.CartItemAddResponse;
 import com.mutsa.shoppingmall.dto.cart.ProductResponse;
 import org.springframework.stereotype.Component;
 
@@ -47,6 +48,17 @@ public class CartMapper {
         return CartItemResponse.builder()
                 .cartItemId(cartItem.getCartItemId())
                 .product(toProductResponse(cartItem.getProduct()))
+                .quantity(cartItem.getQuantity())
+                .build();
+    }
+
+    /**
+     * CartItem 엔티티를 CartItemAddResponse DTO로 변환
+     */
+    public CartItemAddResponse toCartItemAddResponse(CartItem cartItem) {
+        return CartItemAddResponse.builder()
+                .cartItemId(cartItem.getCartItemId())
+                .productId(cartItem.getProduct().getId())
                 .quantity(cartItem.getQuantity())
                 .build();
     }
