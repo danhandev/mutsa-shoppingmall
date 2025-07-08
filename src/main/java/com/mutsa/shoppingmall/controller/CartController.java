@@ -2,6 +2,8 @@ package com.mutsa.shoppingmall.controller;
 
 import com.mutsa.shoppingmall.dto.CommonResponse;
 import com.mutsa.shoppingmall.dto.cart.CartResponse;
+import com.mutsa.shoppingmall.dto.cart.CartItemAddRequest;
+import com.mutsa.shoppingmall.dto.cart.CartItemAddResponse;
 import com.mutsa.shoppingmall.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 /**
  * 장바구니 관련 API 컨트롤러
@@ -40,5 +45,30 @@ public class CartController {
                 .data(cartResponse)
                 .build()
         );
+    }
+
+    /**
+     * 장바구니에 상품 추가 API
+     * @param email 사용자 이메일
+     * @param request 상품ID, 수량
+     * @return 추가된 CartItem 정보
+     */
+    @Operation(summary = "장바구니 상품 추가", description = "장바구니에 상품을 추가합니다.",
+        responses = {
+            @ApiResponse(responseCode = "201", description = "장바구니에 상품을 추가했습니다.",
+                content = @Content(schema = @Schema(implementation = CartItemAddResponse.class)))
+        })
+    @PostMapping("/items")
+    public ResponseEntity<CommonResponse<CartItemAddResponse>> addCartItem(
+            @Parameter(description = "로그인한 사용자 이메일", required = true, example = "user@example.com")
+            @RequestParam String email,
+            @RequestBody CartItemAddRequest request) {
+        CartItemAddResponse response = cartService.addCartItem(email, request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CommonResponse.<CartItemAddResponse>builder()
+                        .statusCode(HttpStatus.CREATED.value())
+                        .message("장바구니에 상품을 추가했습니다.")
+                        .data(response)
+                        .build());
     }
 } 
