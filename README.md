@@ -19,8 +19,8 @@ Spring Boot 기반의 쇼핑몰 웹 서비스입니다.
 
 | 이름     | 역할             |
 |----------|------------------|
-| 김다연   | 백엔드 개발자     |
-| 박서영   | 백엔드 개발자     |
+| 김다연   | 상품 관련 API 개발     |
+| 박서영   | 장바구니 관련 API 개발     |
 
 ---
 
@@ -114,3 +114,17 @@ feature/기능명 → 기능 단위 개발 브랜치
 * PR은 GitHub에서 리뷰 후 병합
 
 ---
+
+## API TEST 결과
+
+<img width="614" alt="image" src="https://github.com/user-attachments/assets/2608d52d-fca0-469d-b61d-f708003f9414" />
+<img width="623" alt="image" src="https://github.com/user-attachments/assets/3518c2db-7c4f-4e0f-876a-3090f09f885c" />
+<img width="615" alt="image" src="https://github.com/user-attachments/assets/d2a1fe31-0e89-4abe-ba07-0fcba466fc81" />
+
+<img width="612" alt="image" src="https://github.com/user-attachments/assets/8e08ef2e-3427-40d6-b3ed-8e72a7a50543" />
+<img width="628" alt="image" src="https://github.com/user-attachments/assets/1dd3b45c-98c0-4def-9ca4-5a071045daff" />
+<img width="617" alt="image" src="https://github.com/user-attachments/assets/0d504fb7-14a4-46d9-bc19-31f0852bdf78" />
+
+---
+
+
