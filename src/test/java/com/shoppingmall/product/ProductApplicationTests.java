@@ -1,10 +1,10 @@
-package com.mutsa.shoppingmall;
+package com.shoppingmall.product;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShoppingmallApplicationTests {
+class ProductApplicationTests {
 
 	@Test
 	void contextLoads() {
