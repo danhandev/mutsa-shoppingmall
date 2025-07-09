@@ -72,4 +72,24 @@ public class CartController {
                         .data(response)
                         .build());
     }
+
+    /**
+     * 장바구니 상품 삭제 API
+     * @param cartItemId 삭제할 장바구니 항목 ID
+     * @return 성공 메시지
+     */
+    @Operation(summary = "장바구니 상품 삭제", description = "장바구니에서 상품을 삭제합니다.")
+    @DeleteMapping("/items/{cartItemId}")
+    public ResponseEntity<CommonResponse<Void>> deleteCartItem(
+            @Parameter(description = "장바구니 항목 ID", required = true, example = "1")
+            @PathVariable Long cartItemId) {
+        cartService.deleteCartItem(cartItemId);
+        return ResponseEntity.ok(
+                CommonResponse.<Void>builder()
+                        .statusCode(200)
+                        .message("장바구니에서 상품을 삭제했습니다.")
+                        .data(null)
+                        .build()
+        );
+    }
 } 
