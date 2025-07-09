@@ -1,4 +1,4 @@
-package com.shoppingmall.product.entity;
+package com.mutsa.shoppingmall.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -54,4 +54,4 @@ public class Product {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-}
+} 

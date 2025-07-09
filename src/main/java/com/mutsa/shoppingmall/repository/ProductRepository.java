@@ -1,7 +1,7 @@
 
-package com.shoppingmall.product.repository;
+package com.mutsa.shoppingmall.repository;
 
-import com.shoppingmall.product.entity.Product;
+import com.mutsa.shoppingmall.domain.Product;
 //db에서 데이터를 조회하려면 jpa 리포지토리가 필요함
 import org.springframework.data.jpa.repository.JpaRepository;
 

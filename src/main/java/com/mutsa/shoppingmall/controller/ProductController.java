@@ -1,11 +1,11 @@
-package com.shoppingmall.product.controller;
+package com.mutsa.shoppingmall.controller;
 //api 요청 받음 : service 호출
 
-import com.shoppingmall.product.dto.ApiResponse;
-import com.shoppingmall.product.dto.ProductListResponseDto;
-import com.shoppingmall.product.dto.ProductResponseDto;
-import com.shoppingmall.product.service.ProductService;
-import com.shoppingmall.product.entity.Product;
+import com.mutsa.shoppingmall.dto.product.ApiResponse;
+import com.mutsa.shoppingmall.dto.product.ProductListResponseDto;
+import com.mutsa.shoppingmall.dto.product.ProductResponseDto;
+import com.mutsa.shoppingmall.service.ProductService;
+// import com.mutsa.shoppingmall.domain.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

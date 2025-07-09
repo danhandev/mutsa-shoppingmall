@@ -1,7 +1,8 @@
-package com.shoppingmall.product.service;
+package com.mutsa.shoppingmall.service;
 
-import com.shoppingmall.product.entity.Product;
-import com.shoppingmall.product.repository.ProductRepository;
+import com.mutsa.shoppingmall.repository.ProductRepository;
+import com.mutsa.shoppingmall.domain.Product;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
