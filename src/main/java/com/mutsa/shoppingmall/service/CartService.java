@@ -9,6 +9,7 @@ import com.mutsa.shoppingmall.dto.cart.CartItemAddResponse;
 import com.mutsa.shoppingmall.exception.CartNotFoundException;
 import com.mutsa.shoppingmall.exception.ErrorCode;
 import com.mutsa.shoppingmall.exception.BusinessException;
+import com.mutsa.shoppingmall.exception.CartItemNotFoundException;
 import com.mutsa.shoppingmall.repository.CartRepository;
 import com.mutsa.shoppingmall.repository.CartItemRepository;
 import com.mutsa.shoppingmall.repository.ProductRepository;
@@ -60,5 +61,16 @@ public class CartService {
                 .build();
         cartItemRepository.save(cartItem);
         return cartMapper.toCartItemAddResponse(cartItem);
+    }
+
+    /**
+     * 장바구니 상품 삭제
+     * @param cartItemId 삭제할 장바구니 항목 ID
+     */
+    @Transactional
+    public void deleteCartItem(Long cartItemId) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(CartItemNotFoundException::new);
+        cartItemRepository.delete(cartItem);
     }
 } 
