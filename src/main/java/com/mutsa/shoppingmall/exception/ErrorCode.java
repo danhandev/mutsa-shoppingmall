@@ -9,6 +9,7 @@ public enum ErrorCode {
     // 공통 에러
     INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHORIZED("UNAUTHORIZED", "로그인 정보가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
+    UNAUTHORIZED_ACCESS("UNAUTHORIZED_ACCESS", "해당 리소스에 대한 접근 권한이 없습니다.", HttpStatus.FORBIDDEN),
     INVALID_REQUEST("INVALID_REQUEST", "잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
     MISSING_REQUIRED_FIELD("MISSING_REQUIRED_FIELD", "필수 항목이 누락되었습니다.", HttpStatus.BAD_REQUEST),
     INVALID_TYPE("INVALID_TYPE", "입력 형식이 올바르지 않습니다.", HttpStatus.UNPROCESSABLE_ENTITY),
