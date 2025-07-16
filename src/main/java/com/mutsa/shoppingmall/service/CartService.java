@@ -84,8 +84,9 @@ public class CartService {
      */
     @Transactional
     public CartItemAddResponse addCartItem(String email, CartItemAddRequest request) {
-        Cart cart = cartRepository.findByUserEmailFetchJoin(email)
-                .orElseThrow(() -> new BusinessException(ErrorCode.CART_NOT_FOUND));
+        // 장바구니 조회 또는 생성 (조회 로직과 동일)
+        Cart cart = cartRepository.findByUserEmail(email)
+                .orElseGet(() -> createEmptyCartForUser(email));
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
         // 이미 담긴 상품이어도 새로운 CartItem 생성
