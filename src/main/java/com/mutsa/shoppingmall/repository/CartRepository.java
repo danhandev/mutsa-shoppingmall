@@ -23,4 +23,10 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
      */
     @Query("SELECT c FROM Cart c JOIN FETCH c.cartItems ci JOIN FETCH ci.product p WHERE c.user.email = :email")
     Optional<Cart> findByUserEmailFetchJoin(@Param("email") String email);
+
+    /**
+     * 사용자 이메일로 장바구니 조회 (cart_items 없어도 반환)
+     */
+    @Query("SELECT c FROM Cart c WHERE c.user.email = :email")
+    Optional<Cart> findByUserEmail(@Param("email") String email);
 } 

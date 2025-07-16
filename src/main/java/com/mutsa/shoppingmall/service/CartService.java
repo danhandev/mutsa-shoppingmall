@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * 장바구니 관련 비즈니스 로직 서비스
  */
@@ -40,8 +42,19 @@ public class CartService {
      */
     @Transactional
     public CartResponse getMyCartByEmail(String email) {
-        Cart cart = cartRepository.findByUserEmailFetchJoin(email)
-                .orElseGet(() -> createEmptyCartForUser(email));
+        // 1. 먼저 장바구니 존재 여부 확인 (fetch join 없이)
+        Optional<Cart> existingCart = cartRepository.findByUserEmail(email);
+        
+        Cart cart;
+        if (existingCart.isPresent()) {
+            // 2. 장바구니가 있으면 cart_items와 함께 조회
+            cart = cartRepository.findByUserEmailFetchJoin(email)
+                    .orElse(existingCart.get()); // fetch join에서 cart_items가 없으면 기본 cart 사용
+        } else {
+            // 3. 장바구니가 없으면 새로 생성
+            cart = createEmptyCartForUser(email);
+        }
+        
         return cartMapper.toCartResponse(cart);
     }
 
