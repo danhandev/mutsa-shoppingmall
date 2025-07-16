@@ -3,6 +3,7 @@ package com.mutsa.shoppingmall.service;
 import com.mutsa.shoppingmall.domain.Cart;
 import com.mutsa.shoppingmall.domain.CartItem;
 import com.mutsa.shoppingmall.domain.Product;
+import com.mutsa.shoppingmall.domain.User;
 import com.mutsa.shoppingmall.dto.cart.CartResponse;
 import com.mutsa.shoppingmall.dto.cart.CartItemAddRequest;
 import com.mutsa.shoppingmall.dto.cart.CartItemAddResponse;
@@ -13,6 +14,7 @@ import com.mutsa.shoppingmall.exception.CartItemNotFoundException;
 import com.mutsa.shoppingmall.repository.CartRepository;
 import com.mutsa.shoppingmall.repository.CartItemRepository;
 import com.mutsa.shoppingmall.repository.ProductRepository;
+import com.mutsa.shoppingmall.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,17 +30,37 @@ public class CartService {
     private final CartMapper cartMapper;
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
+    private final UserRepository userRepository;
 
     /**
      * 내 장바구니 조회 (fetch join, Mapper 분리)
+     * 장바구니가 없으면 자동으로 생성하여 반환
      * @param email 로그인한 사용자 이메일
      * @return 장바구니 응답 DTO
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public CartResponse getMyCartByEmail(String email) {
         Cart cart = cartRepository.findByUserEmailFetchJoin(email)
-                .orElseThrow(CartNotFoundException::new);
+                .orElseGet(() -> createEmptyCartForUser(email));
         return cartMapper.toCartResponse(cart);
+    }
+
+    /**
+     * 사용자를 위한 빈 장바구니 생성
+     * @param email 사용자 이메일
+     * @return 생성된 빈 장바구니
+     */
+    private Cart createEmptyCartForUser(String email) {
+        // 사용자 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+        
+        // 빈 장바구니 생성
+        Cart newCart = Cart.builder()
+                .user(user)
+                .build();
+        
+        return cartRepository.save(newCart);
     }
 
     /**
