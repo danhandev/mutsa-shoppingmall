@@ -38,3 +38,5 @@ out/
 
 # application.properties 환경설정 파일 무시
 src/main/resources/application.properties
+src/main/resources/application.yml
+*.pem

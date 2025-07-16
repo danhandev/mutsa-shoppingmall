@@ -76,14 +76,17 @@ public class CartController {
     /**
      * 장바구니 상품 삭제 API
      * @param cartItemId 삭제할 장바구니 항목 ID
+     * @param email 로그인한 사용자 이메일 (권한 검증용)
      * @return 성공 메시지
      */
     @Operation(summary = "장바구니 상품 삭제", description = "장바구니에서 상품을 삭제합니다.")
     @DeleteMapping("/items/{cartItemId}")
     public ResponseEntity<CommonResponse<Void>> deleteCartItem(
             @Parameter(description = "장바구니 항목 ID", required = true, example = "1")
-            @PathVariable Long cartItemId) {
-        cartService.deleteCartItem(cartItemId);
+            @PathVariable Long cartItemId,
+            @Parameter(description = "로그인한 사용자 이메일", required = true, example = "user@example.com")
+            @RequestParam String email) {
+        cartService.deleteCartItem(cartItemId, email);
         return ResponseEntity.ok(
                 CommonResponse.<Void>builder()
                         .statusCode(200)

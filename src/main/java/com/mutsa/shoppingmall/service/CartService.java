@@ -64,13 +64,21 @@ public class CartService {
     }
 
     /**
-     * 장바구니 상품 삭제
+     * 장바구니 상품 삭제 (사용자 권한 검증 포함)
      * @param cartItemId 삭제할 장바구니 항목 ID
+     * @param email 로그인한 사용자 이메일 (권한 검증용)
      */
     @Transactional
-    public void deleteCartItem(Long cartItemId) {
+    public void deleteCartItem(Long cartItemId, String email) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(CartItemNotFoundException::new);
+        
+        // 권한 검증: 해당 cartItem이 요청한 사용자의 것인지 확인
+        String cartOwnerEmail = cartItem.getCart().getUser().getEmail();
+        if (!cartOwnerEmail.equals(email)) {
+            throw new BusinessException(ErrorCode.UNAUTHORIZED_ACCESS);
+        }
+        
         cartItemRepository.delete(cartItem);
     }
 } 
